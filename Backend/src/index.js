@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const productModel = require('./productModel');
+const upload = require('./upload');
 
 const app = express();
 const PORT = 3000;
@@ -68,6 +69,25 @@ app.get('/products', (req, res) => {
       }
     });
   });
+
+  app.post('/api/productos/:id/upload', upload.single('imagen'), (req, res) => {
+    if (!req.file) {
+      return res.status(400).json({ error: 'No se proporcionó ninguna imagen' });
+    }
+  
+    const productoId = req.params.id;
+    const imagenPath = `uploads/${req.file.filename}`;
+  
+    db.run('UPDATE products SET imagen = ? WHERE id = ?', [imagenPath, productoId], (err) => {
+      if (err) {
+        return res.status(500).json({ error: err.message });
+      }
+  
+      res.json({ message: 'Imagen cargada correctamente', imagenPath });
+    });
+  });
+
+  
 
 
 app.listen(PORT, () => {

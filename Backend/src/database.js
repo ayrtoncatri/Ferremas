@@ -13,7 +13,6 @@ db.serialize(() => {
       )
     `);
   
-    // Verificar si la tabla está vacía antes de insertar datos iniciales
     db.get("SELECT COUNT(*) as count FROM products", (err, row) => {
       if (err) {
         console.error("Error al contar los productos:", err);
@@ -70,5 +69,17 @@ db.serialize(() => {
       }
     });
   });
+
+  // function addColumnToProducts() {
+  //   const query = 'ALTER TABLE products ADD COLUMN imagen TEXT';
+  
+  //   db.run(query, (err) => {
+  //     if (err) {
+  //       console.error('Error al agregar la columna:', err.message);
+  //     } else {
+  //       console.log('Columna agregada correctamente');
+  //     }
+  //   });
+  // }
   
   module.exports = db;

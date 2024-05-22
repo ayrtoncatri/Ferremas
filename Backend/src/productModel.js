@@ -7,7 +7,8 @@ function createProduct(product, callback) {
     product["Marca"],
     product["Código"],
     product["Nombre"],
-    JSON.stringify(product["Precio"])
+    JSON.stringify(product["Precio"]),
+    product["imagen"]
   ];
   db.run(query, params, function (err) {
     callback(err, this.lastID);

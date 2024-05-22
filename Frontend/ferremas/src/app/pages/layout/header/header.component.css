@@ -1,0 +1,12 @@
+
+header{
+  background: black;
+  padding: 5px;
+}
+.opciones{
+  display: flex;
+  justify-content: flex-end;
+  gap: 2em;
+  color: #ffffff;
+  margin: 0.5em;
+}
