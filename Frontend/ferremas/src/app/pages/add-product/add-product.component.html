@@ -1,25 +1,46 @@
 <form (ngSubmit)="onSubmit()" #productForm="ngForm">
-  <label for="productCode">Código del producto:</label>
-  <input type="text" id="productCode" required [(ngModel)]="product.productCode" name="productCode">
+  <article class="main">
+    <section class="first">
 
-  <label for="brand">Marca:</label>
-  <input type="text" id="brand" required [(ngModel)]="product.brand" name="brand">
+      <label for="productCode">Código del producto:</label>
+      <input type="text" id="productCode" required [(ngModel)]="product.productCode" name="productCode">
 
-  <label for="code">Código:</label>
-  <input type="text" id="code" required [(ngModel)]="product.code" name="code">
+      <label for="brand">Marca:</label>
+      <input type="text" id="brand" required [(ngModel)]="product.brand" name="brand">
 
-  <label for="name">Nombre:</label>
-  <input type="text" id="name" required [(ngModel)]="product.name" name="name">
+      <label for="code">Código:</label>
+      <input type="text" id="code" required [(ngModel)]="product.code" name="code">
 
-  <label for="priceDate">Fecha del precio:</label>
-  <input type="date" id="priceDate" required [(ngModel)]="price.Fecha" name="priceDate">
+    </section>
 
-  <label for="priceValue">Valor del precio:</label>
-  <input type="number" id="priceValue" required [(ngModel)]="price.Valor" name="priceValue">
+    <section class="second">
 
-  <label for="image">Imagen del producto:</label>
-  <input type="file" id="image" (change)="onFileSelected($event)" name="image">
+      <label for="name">Nombre:</label>
+      <input type="text" id="name" required [(ngModel)]="product.name" name="name">
 
-  <button type="submit">Agregar Producto</button>
+      <label for="priceDate">Fecha del precio:</label>
+      <input type="date" id="priceDate" required [(ngModel)]="price.Fecha" name="priceDate">
+
+      <label for="priceValue">Valor del precio:</label>
+      <input type="number" id="priceValue" required [(ngModel)]="price.Valor" name="priceValue">
+
+    </section>
+  </article>
+
+
+
+  <article class="multimedia">
+
+    <section class="upload">
+
+      <label for="image">Imagen del producto:</label>
+
+      <input type="file" id="image" (change)="onFileSelected($event)" name="image">
+
+    </section>
+
+    <button type="submit">Agregar Producto</button>
+
+  </article>
 </form>
 
