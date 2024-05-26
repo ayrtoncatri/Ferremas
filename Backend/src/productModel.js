@@ -18,10 +18,12 @@ function createProduct(product, callback) {
 function getAllProducts(callback) {
   const query = `SELECT * FROM products`;
   db.all(query, [], (err, rows) => {
-    // Convertir el campo price de JSON a objeto
     if (!err) {
       rows = rows.map(row => {
         row.price = JSON.parse(row.price);
+        if (row.image) {
+          row.image = `data:image/jpeg;base64,${row.image.toString('base64')}`;
+        }
         return row;
       });
     }
@@ -29,15 +31,42 @@ function getAllProducts(callback) {
   });
 }
 
+// function getAllProducts(callback) {
+//   const query = `SELECT * FROM products`;
+//   db.all(query, [], (err, rows) => {
+//     // Convertir el campo price de JSON a objeto
+//     if (!err) {
+//       rows = rows.map(row => {
+//         row.price = JSON.parse(row.price);
+//         return row;
+//       });
+//     }
+//     callback(err, rows);
+//   });
+// }
+
 function getProductByCode(productCode, callback) {
   const query = `SELECT * FROM products WHERE productCode = ?`;
   db.get(query, [productCode], (err, row) => {
     if (row) {
       row.price = JSON.parse(row.price);
+      if (row.image) {
+        row.image = `data:image/jpeg;base64,${row.image.toString('base64')}`;
+      }
     }
     callback(err, row);
   });
 }
+
+// function getProductByCode(productCode, callback) {
+//   const query = `SELECT * FROM products WHERE productCode = ?`;
+//   db.get(query, [productCode], (err, row) => {
+//     if (row) {
+//       row.price = JSON.parse(row.price);
+//     }
+//     callback(err, row);
+//   });
+// }
 
 function updateProduct(productCode, product, callback) {
   const query = `UPDATE products SET brand = ?, code = ?, name = ?, price = ? WHERE productCode = ?`;

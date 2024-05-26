@@ -72,27 +72,6 @@ export class AddProductComponent {
       }
     );
 
-
-    // this.addPrice();
-    // const formData = new FormData();
-    // formData.append('productCode', this.product.productCode);
-    // formData.append('brand', this.product.brand);
-    // formData.append('code', this.product.code);
-    // formData.append('name', this.product.name);
-    // formData.append('price', JSON.stringify(this.product.price));
-
-    // if (this.selectedFile) {
-    //   formData.append('image', this.selectedFile, this.selectedFile.name);
-    // }
-
-    // this.productService.addProduct(formData).subscribe(
-    //   response => {
-    //     console.log('Producto agregado:', response);
-    //   },
-    //   error => {
-    //     console.error('Error al agregar producto:', error);
-    //   }
-    // );
   }
 
 }

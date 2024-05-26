@@ -3,7 +3,7 @@
   <div *ngIf="products.length > 0; else noData" class="cards">
     <div *ngFor="let product of products" class="card">
       <h5>{{ product.name }} ({{ product.productCode }})</h5>
-      <img [src]="'data:image/png;base64,' + product.image" alt="">
+      <img [src]="product.image" alt="">
       <p>Marca: {{ product.brand }}</p>
       <p>Código: {{ product.code }}</p>
     </div>
