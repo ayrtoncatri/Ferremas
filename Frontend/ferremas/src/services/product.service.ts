@@ -36,4 +36,8 @@ export class ProductService {
     return this.http.post<any>(this.apiUrl, formData);
   }
 
+  deleteProductByCode(code: String): Observable<Product> {
+    return this.http.get<Product>(`${this.apiUrl}/${code}`);
+  }
+
 }
