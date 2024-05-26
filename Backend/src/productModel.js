@@ -1,14 +1,14 @@
 const db = require('./database');
 
 function createProduct(product, callback) {
-  const query = `INSERT INTO products (productCode, brand, code, name, price) VALUES (?, ?, ?, ?, ?)`;
+  const query = `INSERT INTO products (productCode, brand, code, name, price, image) VALUES (?, ?, ?, ?, ?, ?)`;
   const params = [
     product["Código del producto"],
     product["Marca"],
     product["Código"],
     product["Nombre"],
     JSON.stringify(product["Precio"]),
-    product["imagen"]
+    product["image"]
   ];
   db.run(query, params, function (err) {
     callback(err, this.lastID);

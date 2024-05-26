@@ -7,6 +7,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './pages/home/home.component';
 import { HeaderComponent } from './pages/layout/header/header.component';
 import { ProductosComponent } from './pages/productos/productos.component';
+import { AddProductComponent } from './pages/add-product/add-product.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -14,12 +16,14 @@ import { ProductosComponent } from './pages/productos/productos.component';
     AppComponent,
     HomeComponent,
     HeaderComponent,
-    ProductosComponent
+    ProductosComponent,
+    AddProductComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -30,9 +30,9 @@ export class ProductosComponent implements OnInit{
   uploadImageForProduct() {
     if (this.selectedFile && this.selectedProductId) {
       const formData = new FormData();
-      formData.append('imagen', this.selectedFile, this.selectedFile.name);
+      formData.append('image', this.selectedFile, this.selectedFile.name);
 
-      this.http.post(`/api/productos/${this.selectedProductId}/upload`, formData)
+      this.http.post(`/products/${this.selectedProductId}/uploads`, formData)
         .subscribe(
           (res) => console.log(res),
           (err) => console.error(err)

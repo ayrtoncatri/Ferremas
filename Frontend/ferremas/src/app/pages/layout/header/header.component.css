@@ -10,3 +10,7 @@ header{
   color: #ffffff;
   margin: 0.5em;
 }
+.opciones h5{
+  cursor: pointer;
+}
+

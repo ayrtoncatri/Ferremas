@@ -1,23 +1,16 @@
 <app-header></app-header>
-<div *ngIf="products.length > 0; else noData">
-  <ul>
-    <li *ngFor="let product of products">
-      <h3>{{ product.name }} ({{ product.productCode }})</h3>
+<main>
+  <div *ngIf="products.length > 0; else noData" class="cards">
+    <div *ngFor="let product of products" class="card">
+      <h5>{{ product.name }} ({{ product.productCode }})</h5>
       <p>Marca: {{ product.brand }}</p>
       <p>Código: {{ product.code }}</p>
-      <ul>
-        <li *ngFor="let price of product.price">
-          Fecha: {{ price.Fecha | date }} - Valor: {{ price.Valor | currency }}
-        </li>
-      </ul>
-      <input type="file" (change)="onFileSelected($event, product.productCode)" />
-    <button (click)="uploadImageForProduct()">Cargar Imagen</button>
-    <br />
-    <img *ngIf="product.image" [src]="product.image" alt="Imagen del producto" />
-    </li>
-  </ul>
-</div>
+    </div>
+  </div>
+
+  <app-add-product></app-add-product>
+</main>
+
 <ng-template #noData>
   <p>No hay productos disponibles.</p>
 </ng-template>
-
