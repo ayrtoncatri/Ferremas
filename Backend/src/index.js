@@ -13,21 +13,12 @@ const PORT = 3000;
 app.use(bodyParser.json());
 app.use(cors());
 
-// Configuración de multer para la subida de archivos
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'uploads/');
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname));
-  }
-});
+
+const storage = multer.memoryStorage(); 
 const upload = multer({ storage });
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.get('/api/message', (req, res) => {
   res.send('Backend funcionando');
@@ -51,102 +42,61 @@ app.post('/products', upload.single('image'), (req, res) => {
     return res.status(400).json({ error: 'No se proporcionó ninguna imagen' });
   }
 
-  const imageUrl = `http://localhost:${PORT}/uploads/${req.file.filename}`;
+  // Convertir la imagen a Base64
+  const imageBase64 = req.file.buffer.toString('base64');
   const parsedPrice = JSON.parse(price);
 
   const newProduct = {
-    productCode,
-    brand,
-    code,
-    name,
-    price: parsedPrice,
-    image: imageUrl
+    "Código del producto": productCode,
+    "Marca": brand,
+    "Código": code,
+    "Nombre": name,
+    "Precio": parsedPrice,
+    "image": imageBase64
   };
+
+  console.log('Nuevo producto:', newProduct); // Log para depuración
 
   productModel.createProduct(newProduct, (err, id) => {
     if (err) {
       return res.status(500).json({ error: err.message });
     }
 
-    res.status(201).json({ id, message: 'Producto creado correctamente', imageUrl });
-  });
-});
-
-// Endpoint para subir imágenes y crear un producto
-
-// app.post('/api/productos', upload.single('imagen'), (req, res) => {
-//   const { productCode, brand, code, name, price } = req.body;
-
-//   if (!req.file) {
-//     return res.status(400).json({ error: 'No se proporcionó ninguna imagen' });
-//   }
-
-//   const imagenPath = `uploads/${req.file.filename}`;
-//   const parsedPrice = JSON.parse(price);
-
-//   const newProduct = {
-//     productCode,
-//     brand,
-//     code,
-//     name,
-//     price: parsedPrice,
-//     image: imagenPath
-//   };
-
-//   productModel.createProduct(newProduct, (err, id) => {
-//     if (err) {
-//       return res.status(500).json({ error: err.message });
-//     }
-
-//     res.status(201).json({ id, message: 'Producto creado correctamente', imagenPath });
-//   });
-// });
-
-app.post('/products', upload.single('image'), (req, res) => {
-  const imageUrl = `http://localhost:${PORT}/uploads/${req.file.filename}`;
-  const { productCode, name, brand, price, code } = req.body;
-  const parsedPrice = JSON.parse(price);
-
-  const newProduct = {
-    productCode,
-    name,
-    brand,
-    price: parsedPrice,
-    code,
-    image: imageUrl
-  };
-
-  productModel.createProduct(newProduct, (err, id) => {
-    if (err) {
-      res.status(500).json({ error: err.message });
-    } else {
-      res.status(201).json({ id, imageUrl });
-    }
+    res.status(201).json({ id, message: 'Producto creado correctamente', image: imageBase64 });
   });
 });
 
 
-// Endpoint para subir imágenes y actualizar un producto
 app.post('/products/:id/upload', upload.single('image'), (req, res) => {
-  const productoId = req.params.id;
+  const productId = req.params.id;
   const { productCode, brand, code, name, price } = req.body;
 
   if (!req.file) {
     return res.status(400).json({ error: 'No se proporcionó ninguna imagen' });
   }
 
-  const imagenPath = `uploads/${req.file.filename}`;
+  // Convertir la imagen a Base64
+  const imageBase64 = req.file.buffer.toString('base64');
   const parsedPrice = JSON.parse(price);
 
-  db.run('UPDATE products SET productCode = ?, brand = ?, code = ?, name = ?, price = ?, image = ? WHERE id = ?', 
-         [productCode, brand, code, name, parsedPrice, imagenPath, productoId], (err) => {
+  const updatedProduct = {
+    "Marca": brand,
+    "Código": code,
+    "Nombre": name,
+    "Precio": parsedPrice,
+    "image": imageBase64
+  };
+
+  productModel.updateProduct(productId, updatedProduct, (err, changes) => {
     if (err) {
       return res.status(500).json({ error: err.message });
     }
 
-    res.json({ message: 'Producto actualizado correctamente', imagenPath });
+    res.json({ message: 'Producto actualizado correctamente', image: imageBase64 });
   });
 });
+
+
 
 app.get('/products/:productCode', (req, res) => {
   productModel.getProductByCode(req.params.productCode, (err, product) => {
