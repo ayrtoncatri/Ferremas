@@ -9,6 +9,9 @@ import { HeaderComponent } from './pages/layout/header/header.component';
 import { ProductosComponent } from './pages/productos/productos.component';
 import { AddProductComponent } from './pages/add-product/add-product.component';
 import { FormsModule } from '@angular/forms';
+import { PaymentComponent } from './pages/payment/payment.component';
+import { PaymentSuccessComponent } from './pages/payment-success/payment-success.component';
+import { PaymentFailureComponent } from './pages/payment-failure/payment-failure.component';
 
 
 @NgModule({
@@ -17,7 +20,10 @@ import { FormsModule } from '@angular/forms';
     HomeComponent,
     HeaderComponent,
     ProductosComponent,
-    AddProductComponent
+    AddProductComponent,
+    PaymentComponent,
+    PaymentSuccessComponent,
+    PaymentFailureComponent
   ],
   imports: [
     BrowserModule,

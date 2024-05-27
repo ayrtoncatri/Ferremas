@@ -12,8 +12,9 @@ const paymentModel = require('./paymentModel');
 const app = express();
 const PORT = 3000;
 
-app.use(bodyParser.json());
 app.use(cors());
+app.use(bodyParser.json());
+
 
 
 const storage = multer.memoryStorage(); 
@@ -24,6 +25,14 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get('/api/message', (req, res) => {
   res.send('Backend funcionando');
+});
+
+app.get('/payment-success', (req, res) => {
+  res.send('Pago realizado');
+});
+
+app.get('/payment-failure', (req, res) => {
+  res.send('Pago fallido');
 });
 
 //Enpoints de productos
@@ -138,6 +147,16 @@ app.delete('/carts/:cartId/items/:productId', (req, res) => {
 });
 
 // Enpoints de pago
+app.get('/orders', (req, res) => {
+  paymentModel.getAllOrders((err, orders) => {
+    if (err) {
+      res.status(500).json({ error: err.message });
+    } else {
+      res.json(orders);
+    }
+  });
+});
+
 app.post('/payments', (req, res) => {
   const { cartId, amount } = req.body;
   paymentModel.initiatePayment(cartId, amount, (err, response) => {
