@@ -1,7 +1,6 @@
-import { Product, ProductService } from 'src/services/product.service';
+import { ProductService } from 'src/services/product.service';
 import { Component } from '@angular/core';
-
-
+import { Product } from 'src/app/models/product.models';
 @Component({
   selector: 'app-add-product',
   templateUrl: './add-product.component.html',

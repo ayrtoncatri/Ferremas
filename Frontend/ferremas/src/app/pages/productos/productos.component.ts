@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductService, Product } from 'src/services/product.service';
+import { ProductService } from 'src/services/product.service';
 import { HttpClient } from '@angular/common/http';
+import { Product } from 'src/app/models/product.models';
+
 
 @Component({
   selector: 'app-productos',
