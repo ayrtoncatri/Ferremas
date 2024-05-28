@@ -1,16 +1,38 @@
 <app-header></app-header>
-<main>
+<!-- <main>
   <div *ngIf="products.length > 0; else noData" class="cards">
     <div *ngFor="let product of products" class="card">
       <h5>{{ product.name }} ({{ product.productCode }})</h5>
-      <img [src]="'data:image/png;base64,' + product.image" alt="">
+      <img [src]="product.image" alt="">
       <p>Marca: {{ product.brand }}</p>
       <p>Código: {{ product.code }}</p>
     </div>
   </div>
 
   <app-add-product></app-add-product>
-</main>
+</main> -->
+
+<section class="py-5">
+  <div class="container px-4 px-lg-5 mt-5">
+      <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+        <div *ngIf="products.length > 0; else noData" class="cards">
+          <div *ngFor="let product of products" class="card">
+            <h5>{{ product.name }} ({{ product.productCode }})</h5>
+            <img [src]="product.image" alt="">
+            <p>Marca: {{ product.brand }}</p>
+            <p>Código: {{ product.code }}</p>
+          </div>
+        </div>
+      </div>
+  </div>
+  <app-payment></app-payment>
+</section>
+
+<app-add-product></app-add-product>
+
+<footer class="py-5 bg-dark">
+  <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
+</footer>
 
 <ng-template #noData>
   <p>No hay productos disponibles.</p>

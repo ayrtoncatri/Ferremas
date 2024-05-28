@@ -1,6 +1,7 @@
-import { ProductService, Product } from 'src/services/product.service';
+import { ProductService } from 'src/services/product.service';
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../services/api.service';
+import { Product } from './models/product.models';
 
 
 @Component({
