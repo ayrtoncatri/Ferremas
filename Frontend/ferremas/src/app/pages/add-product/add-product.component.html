@@ -1,46 +1,39 @@
-<form (ngSubmit)="onSubmit()" #productForm="ngForm">
-  <article class="main">
-    <section class="first">
-
-      <label for="productCode">Código del producto:</label>
-      <input type="text" id="productCode" required [(ngModel)]="product.productCode" name="productCode">
-
-      <label for="brand">Marca:</label>
-      <input type="text" id="brand" required [(ngModel)]="product.brand" name="brand">
-
-      <label for="code">Código:</label>
-      <input type="text" id="code" required [(ngModel)]="product.code" name="code">
-
-    </section>
-
-    <section class="second">
-
-      <label for="name">Nombre:</label>
-      <input type="text" id="name" required [(ngModel)]="product.name" name="name">
-
-      <label for="priceDate">Fecha del precio:</label>
-      <input type="date" id="priceDate" required [(ngModel)]="price.Fecha" name="priceDate">
-
-      <label for="priceValue">Valor del precio:</label>
-      <input type="number" id="priceValue" required [(ngModel)]="price.Valor" name="priceValue">
-
-    </section>
-  </article>
-
-
-
-  <article class="multimedia">
-
-    <section class="upload">
-
-      <label for="image">Imagen del producto:</label>
-
-      <input type="file" id="image" (change)="onFileSelected($event)" name="image">
-
-    </section>
-
-    <button type="submit">Agregar Producto</button>
-
-  </article>
-</form>
-
+<section class="py-5">
+  <div class="container px-4 px-lg-5 mt-5">
+    <form (ngSubmit)="onSubmit()" #productForm="ngForm">
+      <div class="row gx-4 gx-lg-5">
+        <div class="col-md-6 mb-3">
+          <label for="productCode" class="form-label">Código del producto:</label>
+          <input type="text" id="productCode" class="form-control" required [(ngModel)]="product.productCode" name="productCode">
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="brand" class="form-label">Marca:</label>
+          <input type="text" id="brand" class="form-control" required [(ngModel)]="product.brand" name="brand">
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="code" class="form-label">Código:</label>
+          <input type="text" id="code" class="form-control" required [(ngModel)]="product.code" name="code">
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="name" class="form-label">Nombre:</label>
+          <input type="text" id="name" class="form-control" required [(ngModel)]="product.name" name="name">
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="priceDate" class="form-label">Fecha del precio:</label>
+          <input type="date" id="priceDate" class="form-control" required [(ngModel)]="price.Fecha" name="priceDate">
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="priceValue" class="form-label">Valor del precio:</label>
+          <input type="number" id="priceValue" class="form-control" required [(ngModel)]="price.Valor" name="priceValue">
+        </div>
+        <div class="col-md-12 mb-3">
+          <label for="image" class="form-label">Imagen del producto:</label>
+          <input type="file" id="image" class="form-control" (change)="onFileSelected($event)" name="image">
+        </div>
+        <div class="col-12 text-center">
+          <button type="submit" class="btn btn-primary" onclick="location.reload" >Agregar Producto</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>

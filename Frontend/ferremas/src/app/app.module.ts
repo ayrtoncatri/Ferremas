@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { PaymentComponent } from './pages/payment/payment.component';
 import { PaymentSuccessComponent } from './pages/payment-success/payment-success.component';
 import { PaymentFailureComponent } from './pages/payment-failure/payment-failure.component';
+import { CurrencyPipe } from '@angular/common';
 
 
 @NgModule({
@@ -31,7 +32,7 @@ import { PaymentFailureComponent } from './pages/payment-failure/payment-failure
     HttpClientModule,
     FormsModule
   ],
-  providers: [],
+  providers: [CurrencyPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -27,4 +27,5 @@ export class CartService {
   removeFromCart(cartId: string, productId: string): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/carts/${cartId}/items/${productId}`);
   }
+
 }

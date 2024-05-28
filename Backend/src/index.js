@@ -3,11 +3,9 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const multer = require('multer');
 
-
 const productModel = require('./productModel');
 const cartModel = require('./cartModel');
 const paymentModel = require('./paymentModel');
-
 
 const app = express();
 const PORT = 3000;
@@ -15,18 +13,18 @@ const PORT = 3000;
 app.use(cors());
 app.use(bodyParser.json());
 
-
-
-const storage = multer.memoryStorage(); 
+const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Mensaje de verificación del backend
 app.get('/api/message', (req, res) => {
   res.send('Backend funcionando');
 });
 
+// Rutas de pago (sin prefijo /api)
 app.get('/payment-success', (req, res) => {
   res.send('Pago realizado');
 });
@@ -35,8 +33,7 @@ app.get('/payment-failure', (req, res) => {
   res.send('Pago fallido');
 });
 
-//Enpoints de productos
-
+// Rutas de productos
 app.get('/products', (req, res) => {
   productModel.getAllProducts((err, products) => {
     if (err) {
@@ -53,7 +50,7 @@ app.post('/products', upload.single('image'), (req, res) => {
     brand: req.body.brand,
     code: req.body.code,
     name: req.body.name,
-    price: JSON.parse(req.body.price) 
+    price: JSON.parse(req.body.price)
   };
 
   productModel.createProductWithImage(newProduct, req.file.buffer, (err, productId) => {
@@ -89,20 +86,24 @@ app.put('/products/:productCode', (req, res) => {
   });
 });
 
-app.delete('/products/:productCode', (req, res) => {
+
+app.delete('/api/products/:productCode', (req, res) => {
+  console.log(`Attempting to delete product with code: ${req.params.productCode}`);
   productModel.deleteProduct(req.params.productCode, (err, changes) => {
     if (err) {
+      console.error('Error deleting product:', err);
       res.status(500).json({ error: err.message });
     } else if (changes) {
-      res.json({ message: 'Product deleted' });
+      console.log('Product deleted successfully');
+      res.json({ message: 'Producto eliminado correctamente' });
     } else {
-      res.status(404).json({ error: 'Product not found' });
+      console.log('Product not found');
+      res.status(404).json({ error: 'Producto no encontrado' });
     }
   });
 });
 
-//Endpoints de carrito de compras
-
+// Rutas de carrito de compras
 app.post('/carts', (req, res) => {
   cartModel.createCart((err, cartId) => {
     if (err) {
@@ -146,7 +147,7 @@ app.delete('/carts/:cartId/items/:productId', (req, res) => {
   });
 });
 
-// Enpoints de pago
+
 app.get('/orders', (req, res) => {
   paymentModel.getAllOrders((err, orders) => {
     if (err) {
@@ -178,7 +179,6 @@ app.post('/payments/confirm', (req, res) => {
     }
   });
 });
-
 
 app.listen(PORT, () => {
   console.log(`Server corriendo en http://localhost:${PORT}/`);

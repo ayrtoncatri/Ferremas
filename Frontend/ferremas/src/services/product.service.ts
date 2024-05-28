@@ -9,6 +9,7 @@ import { Product } from 'src/app/models/product.models';
 })
 export class ProductService {
   private apiUrl = 'http://localhost:3000/products';
+  public products: Product[] = [];
 
   constructor(private http: HttpClient) {}
 
@@ -23,6 +24,7 @@ export class ProductService {
   addProduct(formData: FormData): Observable<any> {
     return this.http.post<any>(this.apiUrl, formData);
   }
+
 
   deleteProductByCode(code: String): Observable<Product> {
     return this.http.get<Product>(`${this.apiUrl}/${code}`);

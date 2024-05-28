@@ -14,19 +14,37 @@
 
 <section class="py-5">
   <div class="container px-4 px-lg-5 mt-5">
-      <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-        <div *ngIf="products.length > 0; else noData" class="cards">
-          <div *ngFor="let product of products" class="card">
-            <h5>{{ product.name }} ({{ product.productCode }})</h5>
-            <img [src]="product.image" alt="">
-            <p>Marca: {{ product.brand }}</p>
-            <p>Código: {{ product.code }}</p>
+    <div class="row gx-4 gx-lg-5 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 justify-content-center">
+      <ng-container *ngIf="products.length > 0; else noData">
+        <div *ngFor="let product of products" class="col mb-4">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title">{{ product.name }} ({{ product.productCode }})</h5>
+              <img [src]="product.image" alt="{{ product.name }}" class="card-img-top img-fluid">
+              <p class="card-text">Marca: {{ product.brand }}</p>
+              <p class="card-text">Código: {{ product.code }}</p>
+              <ul class="list-group">
+                <li *ngFor="let priceItem of product.price" class="list-group-item">
+                   Precio: {{ priceItem.Valor | currency:'$':'symbol':'1.0-0' }}
+                </li>
+              </ul>
+            </div>
+            <div class="card-footer text-center">
+              <button (click)="deleteProduct(product.productCode)" class="btn btn-danger">Eliminar</button>
+            </div>
           </div>
         </div>
-      </div>
+      </ng-container>
+    </div>
+    <ng-template #noData>
+      <p>No hay productos disponibles.</p>
+    </ng-template>
   </div>
   <app-payment></app-payment>
 </section>
+
+
+
 
 <app-add-product></app-add-product>
 

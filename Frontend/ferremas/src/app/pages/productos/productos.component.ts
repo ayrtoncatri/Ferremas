@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/services/product.service';
 import { HttpClient } from '@angular/common/http';
 import { Product } from 'src/app/models/product.models';
+import { ApiService } from 'src/services/api.service';
 
 
 @Component({
@@ -16,7 +17,8 @@ export class ProductosComponent implements OnInit{
   selectedFile: File | null = null;
 
   constructor(private http: HttpClient,
-              private productService: ProductService){}
+              private productService: ProductService,
+              private apiService: ApiService){}
 
   ngOnInit() {
     this.productService.getProducts().subscribe((data) => {
@@ -41,5 +43,16 @@ export class ProductosComponent implements OnInit{
         );
     }
   }
+
+  deleteProduct(productCode: string): void {
+    this.apiService.deleteProduct(productCode).subscribe(response => {
+      console.log('Producto eliminado:', response);
+      this.products = this.products.filter(product => product.productCode !== productCode);
+    }, error => {
+      console.error('Error eliminando el producto:', error);
+    });
+  }
+
+
 
 }

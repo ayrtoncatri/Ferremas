@@ -1,12 +1,15 @@
 import { ProductService } from 'src/services/product.service';
 import { Component } from '@angular/core';
 import { Product } from 'src/app/models/product.models';
+import { Observable } from 'rxjs';
+
 @Component({
   selector: 'app-add-product',
   templateUrl: './add-product.component.html',
   styleUrls: ['./add-product.component.css']
 })
 export class AddProductComponent {
+
 
   product: Product = {
     productCode: '',
@@ -21,14 +24,16 @@ export class AddProductComponent {
     Fecha: '',
     Valor: 0
   };
-
   selectedFile: File | null = null;
 
   constructor(private productService: ProductService) {}
 
+  products: Product[] = [];
+
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
   }
+
 
   addPrice() {
     this.product.price.push({ Fecha: this.price.Fecha, Valor: this.price.Valor });
@@ -64,13 +69,31 @@ export class AddProductComponent {
 
     this.productService.addProduct(formData).subscribe(
       response => {
+        location.reload()
         console.log('Producto agregado:', response);
+        this.resetForm();
+        
       },
       error => {
         console.error('Error al agregar producto:', error);
       }
     );
-
   }
 
+  // Método para restablecer el formulario después de agregar un producto
+  resetForm() {
+    this.product = {
+      productCode: '',
+      brand: '',
+      code: '',
+      name: '',
+      price: [],
+      image: ''
+    };
+    this.price = {
+      Fecha: '',
+      Valor: 0
+    };
+    this.selectedFile = null; 
+  }
 }

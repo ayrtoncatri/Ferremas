@@ -25,4 +25,17 @@ export class ApiService {
   getProducts(): Observable<any> {
     return this.http.get(`${this.baseUrl}/products`);
   }
+
+  deleteProductFromCart(cartId: string, productId: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/carts/${cartId}/items/${productId}`);
+  }
+
+  deleteProduct(productCode: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/products/${productCode}`);
+  }
+
+  
+
+
 }
+
