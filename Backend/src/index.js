@@ -1,11 +1,18 @@
+require('dotenv').config();
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const multer = require('multer');
 
 const productModel = require('./productModel');
-const cartModel = require('./cartModel');
+
 const paymentModel = require('./paymentModel');
+
+
+const authRoutes = require('./authRoutes');
+const cartRoutes = require('./cartRoutes');
+const authenticate = require('./middleware/authenticate');
 
 const app = express();
 const PORT = 3000;
@@ -19,19 +26,27 @@ const upload = multer({ storage });
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Mensaje de verificación del backend
-app.get('/api/message', (req, res) => {
-  res.send('Backend funcionando');
-});
+// Rutas de autenticación
+app.use('/auth', authRoutes);
 
-// Rutas de pago (sin prefijo /api)
-app.get('/payment-success', (req, res) => {
-  res.send('Pago realizado');
-});
+// Rutas del carrito (protegidas por autenticación)
+app.use('/cart', authenticate, cartRoutes);
 
-app.get('/payment-failure', (req, res) => {
-  res.send('Pago fallido');
-});
+// Rutas de pagos (protegidas por autenticación)
+// app.use('/payments', authenticate, paymentModel);
+
+
+// app.get('/api/message', (req, res) => {
+//   res.send('Backend funcionando');
+// });
+
+// app.get('/payment-success', (req, res) => {
+//   res.send('Pago realizado');
+// });
+
+// app.get('/payment-failure', (req, res) => {
+//   res.send('Pago fallido');
+// });
 
 // Rutas de productos
 app.get('/products', (req, res) => {
@@ -103,51 +118,7 @@ app.delete('/api/products/:productCode', (req, res) => {
   });
 });
 
-// Rutas de carrito de compras
-app.post('/carts', (req, res) => {
-  cartModel.createCart((err, cartId) => {
-    if (err) {
-      res.status(500).json({ error: err.message });
-    } else {
-      res.status(201).json({ message: 'Carrito creado exitosamente', cartId });
-    }
-  });
-});
-
-app.post('/carts/:cartId/items', (req, res) => {
-  const { productId, quantity } = req.body;
-  cartModel.addToCart(req.params.cartId, productId, quantity, (err, cartItemId) => {
-    if (err) {
-      res.status(500).json({ error: err.message });
-    } else {
-      res.status(201).json({ message: 'Producto añadido al carrito', cartItemId });
-    }
-  });
-});
-
-app.get('/carts/:cartId/items', (req, res) => {
-  cartModel.getCartItems(req.params.cartId, (err, items) => {
-    if (err) {
-      res.status(500).json({ error: err.message });
-    } else {
-      res.json(items);
-    }
-  });
-});
-
-app.delete('/carts/:cartId/items/:productId', (req, res) => {
-  cartModel.removeFromCart(req.params.cartId, req.params.productId, (err, changes) => {
-    if (err) {
-      res.status(500).json({ error: err.message });
-    } else if (changes) {
-      res.json({ message: 'Producto eliminado del carrito' });
-    } else {
-      res.status(404).json({ error: 'Producto no encontrado en el carrito' });
-    }
-  });
-});
-
-
+// Enpoints de pago
 app.get('/orders', (req, res) => {
   paymentModel.getAllOrders((err, orders) => {
     if (err) {
@@ -158,7 +129,7 @@ app.get('/orders', (req, res) => {
   });
 });
 
-app.post('/payments', (req, res) => {
+app.post('/payments',authenticate, (req, res) => {
   const { cartId, amount } = req.body;
   paymentModel.initiatePayment(cartId, amount, (err, response) => {
     if (err) {
@@ -169,7 +140,7 @@ app.post('/payments', (req, res) => {
   });
 });
 
-app.post('/payments/confirm', (req, res) => {
+app.post('/payments/confirm',authenticate, (req, res) => {
   const { token } = req.body;
   paymentModel.confirmPayment(token, (err, response) => {
     if (err) {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -7,15 +7,17 @@ import { Observable } from 'rxjs';
 })
 export class PaymentService {
 
-  private apiUrl = 'http://localhost:3000';
+  private apiUrl = 'http://localhost:3000/payments';
 
   constructor(private http: HttpClient) {}
 
   initiatePayment(cartId: string, amount: number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/payments`, { cartId, amount });
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
+    return this.http.post(`${this.apiUrl}/initiate`, { cartId, amount }, { headers });
   }
 
   confirmPayment(token: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/payments/confirm`, { token });
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
+    return this.http.post(`${this.apiUrl}/confirm`, { token }, { headers });
   }
 }

@@ -1,23 +1,25 @@
 const db = require('./database');
 
-function createCart(callback) {
-  const query = `INSERT INTO carts DEFAULT VALUES`;
-  db.run(query, function (err) {
+function createCart(userId, callback) {
+  const query = `INSERT INTO carts (userId, status) VALUES (?, 'open')`;
+  db.run(query, [userId], function (err) {
     callback(err, this.lastID);
   });
 }
 
-function addToCart(cartId, productId, quantity, callback) {
-  const query = `INSERT INTO cart_items (cartId, productId, quantity) VALUES (?, ?, ?)`;
-  const params = [cartId, productId, quantity];
-  db.run(query, params, function (err) {
+function addToCart(userId, productId, quantity, callback) {
+  const query = `INSERT INTO cartItems (cartId, productId, quantity) VALUES (
+    (SELECT id FROM carts WHERE userId = ? AND status = 'open'),
+    ?, ?
+  )`;
+  db.run(query, [userId, productId, quantity], function (err) {
     callback(err, this.lastID);
   });
 }
 
-function getCartItems(cartId, callback) {
-  const query = `SELECT p.*, ci.quantity FROM products p JOIN cart_items ci ON p.productCode = ci.productId WHERE ci.cartId = ?`;
-  db.all(query, [cartId], (err, rows) => {
+function getCartItems(userId, callback) {
+  const query = `SELECT p.*, ci.quantity FROM products p JOIN cartItems ci ON p.id = ci.productId WHERE ci.cartId = (SELECT id FROM carts WHERE userId = ? AND status = 'open')`;
+  db.all(query, [userId], (err, rows) => {
     if (!err) {
       rows = rows.map(row => {
         row.price = JSON.parse(row.price);
@@ -31,9 +33,9 @@ function getCartItems(cartId, callback) {
   });
 }
 
-function removeFromCart(cartId, productId, callback) {
-  const query = `DELETE FROM cart_items WHERE cartId = ? AND productId = ?`;
-  db.run(query, [cartId, productId], function (err) {
+function removeFromCart(userId, productId, callback) {
+  const query = `DELETE FROM cartItems WHERE cartId = (SELECT id FROM carts WHERE userId = ? AND status = 'open') AND productId = ?`;
+  db.run(query, [userId, productId], function (err) {
     callback(err, this.changes);
   });
 }
