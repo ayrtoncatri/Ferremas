@@ -12,34 +12,53 @@ import { Product } from 'src/app/models/product.models';
 export class ProductosComponent implements OnInit{
 
   products: Product[] = [];
-  selectedProductId: string ='';
-  selectedFile: File | null = null;
 
-  constructor(private http: HttpClient,
-              private productService: ProductService){}
+  constructor(private productService: ProductService) {}
 
   ngOnInit() {
-    this.productService.getProducts().subscribe((data) => {
-      this.products = data;
-    });
+    this.loadProducts();
   }
 
-  onFileSelected(event: any, productoId: string) {
-    this.selectedFile = event.target.files[0];
-    this.selectedProductId = productoId;
+  loadProducts() {
+    this.productService.getProducts().subscribe(
+      (data) => {
+        this.products = data;
+      },
+      (error) => {
+        console.error('Error al obtener productos', error);
+      }
+    );
   }
 
-  uploadImageForProduct() {
-    if (this.selectedFile && this.selectedProductId) {
-      const formData = new FormData();
-      formData.append('image', this.selectedFile, this.selectedFile.name);
+  // products: Product[] = [];
+  // selectedProductId: string ='';
+  // selectedFile: File | null = null;
 
-      this.http.post(`/products/${this.selectedProductId}/uploads`, formData)
-        .subscribe(
-          (res) => console.log(res),
-          (err) => console.error(err)
-        );
-    }
-  }
+  // constructor(private http: HttpClient,
+  //             private productService: ProductService){}
+
+  // ngOnInit() {
+  //   this.productService.getProducts().subscribe((data) => {
+  //     this.products = data;
+  //   });
+  // }
+
+  // onFileSelected(event: any, productoId: string) {
+  //   this.selectedFile = event.target.files[0];
+  //   this.selectedProductId = productoId;
+  // }
+
+  // uploadImageForProduct() {
+  //   if (this.selectedFile && this.selectedProductId) {
+  //     const formData = new FormData();
+  //     formData.append('image', this.selectedFile, this.selectedFile.name);
+
+  //     this.http.post(`/products/${this.selectedProductId}/uploads`, formData)
+  //       .subscribe(
+  //         (res) => console.log(res),
+  //         (err) => console.error(err)
+  //       );
+  //   }
+  // }
 
 }

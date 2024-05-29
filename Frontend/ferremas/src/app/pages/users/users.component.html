@@ -1,0 +1,57 @@
+<div class="users-list">
+  <h2>Gestión de Usuarios</h2>
+  <ul>
+    <li *ngFor="let user of users">
+      {{ user.name }} - {{ user.rut }} - {{ user.role }}
+      <button (click)="editUser(user)">Editar</button>
+      <button (click)="deleteUser(user.id!)">Eliminar</button>
+    </li>
+  </ul>
+
+  <div *ngIf="editingUser">
+    <h3>Editar Usuario</h3>
+    <form (ngSubmit)="updateUser()">
+      <label>
+        Nombre:
+        <input [(ngModel)]="editingUser.name" name="name" required>
+      </label>
+      <label>
+        RUT:
+        <input [(ngModel)]="editingUser.rut" name="rut" required>
+      </label>
+      <label>
+        Rol:
+        <input [(ngModel)]="editingUser.role" name="role" required>
+      </label>
+      <button type="submit">Guardar</button>
+      <button type="button" (click)="cancelEdit()">Cancelar</button>
+    </form>
+  </div>
+
+  <div>
+    <h3>Crear Nuevo Usuario</h3>
+    <form (ngSubmit)="createUser()">
+      <label>
+        Nombre de Usuario:
+        <input [(ngModel)]="newUser.username" name="username" required>
+      </label>
+      <label>
+        Nombre:
+        <input [(ngModel)]="newUser.name" name="name" required>
+      </label>
+      <label>
+        RUT:
+        <input [(ngModel)]="newUser.rut" name="rut" required>
+      </label>
+      <label>
+        Rol:
+        <input [(ngModel)]="newUser.role" name="role" required>
+      </label>
+      <label>
+        Contraseña:
+        <input type="password" [(ngModel)]="newUser.password" name="password" required>
+      </label>
+      <button type="submit">Crear</button>
+    </form>
+  </div>
+</div>

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Cart, CartItem } from 'src/app/models/cart.models';
 
@@ -8,23 +8,22 @@ import { Cart, CartItem } from 'src/app/models/cart.models';
 })
 export class CartService {
 
-  private apiUrl = 'http://localhost:3000';
+  private apiUrl = 'http://localhost:3000/cart';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  createCart(): Observable<Cart> {
-    return this.http.post<Cart>(`${this.apiUrl}/carts`, {});
+  getCartItems(): Observable<CartItem[]> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
+    return this.http.get<CartItem[]>(`${this.apiUrl}/items`, { headers });
   }
 
-  addToCart(cartId: string, productId: string, quantity: number): Observable<CartItem> {
-    return this.http.post<CartItem>(`${this.apiUrl}/carts/${cartId}/items`, { productId, quantity });
+  addToCart(productId: string, quantity: number): Observable<any> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
+    return this.http.post(`${this.apiUrl}/add`, { productId, quantity }, { headers });
   }
 
-  getCartItems(cartId: string): Observable<CartItem[]> {
-    return this.http.get<CartItem[]>(`${this.apiUrl}/carts/${cartId}/items`);
-  }
-
-  removeFromCart(cartId: string, productId: string): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/carts/${cartId}/items/${productId}`);
+  removeFromCart(productId: string): Observable<any> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
+    return this.http.post(`${this.apiUrl}/remove`, { productId }, { headers });
   }
 }
