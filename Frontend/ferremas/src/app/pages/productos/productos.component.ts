@@ -22,7 +22,11 @@ export class ProductosComponent implements OnInit{
 
   loadProducts(): void {
     this.productService.getProducts().subscribe((data: Product[]) => {
-      this.products = data;
+      // Asegúrate de que cada producto tenga un array en la propiedad 'price'
+      this.products = data.map(product => ({
+        ...product,
+        price: Array.isArray(product.price) ? product.price : []
+      }));
     });
   }
 
