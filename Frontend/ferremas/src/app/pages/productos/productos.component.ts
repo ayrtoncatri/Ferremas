@@ -12,18 +12,17 @@ import { ApiService } from 'src/services/api.service';
 })
 export class ProductosComponent implements OnInit{
 
-  products: Product[] = [];
 
-<<<<<<< HEAD
   constructor(private http: HttpClient,
               private productService: ProductService,
               private apiService: ApiService){}
-=======
-  constructor(private productService: ProductService) {}
->>>>>>> d75e544ff620f70f4e7250b73016b46a52748de0
+  
 
   ngOnInit() {
     this.loadProducts();
+    this.productService.getProducts().subscribe((data) => {
+    this.products = data;
+     });
   }
 
   loadProducts() {
@@ -37,36 +36,32 @@ export class ProductosComponent implements OnInit{
     );
   }
 
-  // products: Product[] = [];
-  // selectedProductId: string ='';
-  // selectedFile: File | null = null;
+    products: Product[] = [];
+    selectedProductId: string ='';
+    selectedFile: File | null = null;
 
-  // constructor(private http: HttpClient,
-  //             private productService: ProductService){}
 
-  // ngOnInit() {
-  //   this.productService.getProducts().subscribe((data) => {
-  //     this.products = data;
-  //   });
-  // }
 
-  // onFileSelected(event: any, productoId: string) {
-  //   this.selectedFile = event.target.files[0];
-  //   this.selectedProductId = productoId;
-  // }
+  onFileSelected(event: any, productoId: string) {
+    this.selectedFile = event.target.files[0];
+    this.selectedProductId = productoId;
+  }
 
-  // uploadImageForProduct() {
-  //   if (this.selectedFile && this.selectedProductId) {
-  //     const formData = new FormData();
-  //     formData.append('image', this.selectedFile, this.selectedFile.name);
+  uploadImageForProduct() {
+    if (this.selectedFile && this.selectedProductId) {
+      const formData = new FormData();
+      formData.append('image', this.selectedFile, this.selectedFile.name);
 
-  //     this.http.post(`/products/${this.selectedProductId}/uploads`, formData)
-  //       .subscribe(
-  //         (res) => console.log(res),
-  //         (err) => console.error(err)
-  //       );
-  //   }
-  // }
+      this.http.post(`/products/${this.selectedProductId}/uploads`, formData)
+        .subscribe(
+          (res) => console.log(res),
+          (err) => console.error(err)
+        );
+    }
+  }
+
+
+
 
   deleteProduct(productCode: string): void {
     this.apiService.deleteProduct(productCode).subscribe(response => {
@@ -76,7 +71,4 @@ export class ProductosComponent implements OnInit{
       console.error('Error eliminando el producto:', error);
     });
   }
-
-
-
 }

@@ -1,43 +1,43 @@
-<div class="auth-container">
-  <h2>Registro</h2>
-  <form (ngSubmit)="register()" #registerForm="ngForm">
-    <div>
-      <label for="username">Nombre de usuario:</label>
-      <input type="text" id="username" [(ngModel)]="user.username" name="username" required>
+<div class="auth-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; background-color: #f0f0f0; padding: 20px;">
+  <h2 style="color: #333;">Registro</h2>
+  <form (ngSubmit)="register()" #registerForm="ngForm" style="width: 100%; max-width: 400px; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+    <div style="margin-bottom: 15px;">
+      <label for="username" style="display: block; margin-bottom: 5px; color: #555;">Nombre de usuario:</label>
+      <input type="text" id="username" [(ngModel)]="user.username" name="username" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
     </div>
-    <div>
-      <label for="password">Contraseña:</label>
-      <input type="password" id="password" [(ngModel)]="user.password" name="password" required>
+    <div style="margin-bottom: 15px;">
+      <label for="password" style="display: block; margin-bottom: 5px; color: #555;">Contraseña:</label>
+      <input type="password" id="password" [(ngModel)]="user.password" name="password" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
     </div>
-    <div>
-      <label for="name">Nombre:</label>
-      <input type="text" id="name" [(ngModel)]="user.name" name="name" required>
+    <div style="margin-bottom: 15px;">
+      <label for="name" style="display: block; margin-bottom: 5px; color: #555;">Nombre:</label>
+      <input type="text" id="name" [(ngModel)]="user.name" name="name" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
     </div>
-    <div>
-      <label for="rut">RUT:</label>
-      <input type="text" id="rut" [(ngModel)]="user.rut" name="rut" required>
+    <div style="margin-bottom: 15px;">
+      <label for="rut" style="display: block; margin-bottom: 5px; color: #555;">RUT:</label>
+      <input type="text" id="rut" [(ngModel)]="user.rut" name="rut" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
     </div>
-    <div>
-      <label for="role">Rol:</label>
-      <input type="text" id="role" [(ngModel)]="user.role" name="role" required>
+    <div style="margin-bottom: 15px;">
+      <label for="role" style="display: block; margin-bottom: 5px; color: #555;">Rol:</label>
+      <input type="text" id="role" [(ngModel)]="user.role" name="role" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
     </div>
-    <button type="submit">Registrar</button>
+    <button type="submit" style="width: 100%; padding: 10px; background-color: #007bff; color: #fff; border: none; border-radius: 4px; cursor: pointer;">Registrar</button>
   </form>
 
-  <h2>Inicio de Sesión</h2>
-  <form (ngSubmit)="login()" #loginForm="ngForm">
-    <div>
-      <label for="loginUsername">Nombre de usuario:</label>
-      <input type="text" id="loginUsername" [(ngModel)]="credentials.username" name="loginUsername" required>
+  <h2 style="color: #333; margin-top: 40px;">Inicio de Sesión</h2>
+  <form (ngSubmit)="login()" #loginForm="ngForm" style="width: 100%; max-width: 400px; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+    <div style="margin-bottom: 15px;">
+      <label for="loginUsername" style="display: block; margin-bottom: 5px; color: #555;">Nombre de usuario:</label>
+      <input type="text" id="loginUsername" [(ngModel)]="credentials.username" name="loginUsername" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
     </div>
-    <div>
-      <label for="loginPassword">Contraseña:</label>
-      <input type="password" id="loginPassword" [(ngModel)]="credentials.password" name="loginPassword" required>
+    <div style="margin-bottom: 15px;">
+      <label for="loginPassword" style="display: block; margin-bottom: 5px; color: #555;">Contraseña:</label>
+      <input type="password" id="loginPassword" [(ngModel)]="credentials.password" name="loginPassword" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
     </div>
-    <button type="submit">Iniciar Sesión</button>
+    <button type="submit" style="width: 100%; padding: 10px; background-color: #007bff; color: #fff; border: none; border-radius: 4px; cursor: pointer;">Iniciar Sesión</button>
   </form>
 
-  <div *ngIf="errorMessage" class="error-message">
+  <div *ngIf="errorMessage" class="error-message" style="color: red; margin-top: 20px;">
     {{ errorMessage }}
   </div>
 </div>

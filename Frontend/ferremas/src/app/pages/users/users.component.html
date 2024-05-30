@@ -1,57 +1,57 @@
-<div class="users-list">
-  <h2>Gestión de Usuarios</h2>
-  <ul>
-    <li *ngFor="let user of users">
+<div class="users-list" style="text-align: center; max-width: 600px; margin: auto; padding: 20px; background-color: #f9f9f9; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+  <h2 style="color: #333;">Gestión de Usuarios</h2>
+  <ul style="list-style: none; padding: 0;">
+    <li *ngFor="let user of users" style="margin-bottom: 10px; padding: 10px; background-color: #fff; border: 1px solid #ddd; border-radius: 5px;">
       {{ user.name }} - {{ user.rut }} - {{ user.role }}
-      <button (click)="editUser(user)">Editar</button>
-      <button (click)="deleteUser(user.id!)">Eliminar</button>
+      <button (click)="editUser(user)" style="margin-left: 10px; padding: 5px 10px; background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Editar</button>
+      <button (click)="deleteUser(user.id!)" style="margin-left: 10px; padding: 5px 10px; background-color: #dc3545; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Eliminar</button>
     </li>
   </ul>
 
-  <div *ngIf="editingUser">
-    <h3>Editar Usuario</h3>
-    <form (ngSubmit)="updateUser()">
-      <label>
+  <div *ngIf="editingUser" style="margin-top: 20px;">
+    <h3 style="color: #333;">Editar Usuario</h3>
+    <form (ngSubmit)="updateUser()" style="display: flex; flex-direction: column; align-items: center;">
+      <label style="margin-bottom: 10px; width: 100%;">
         Nombre:
-        <input [(ngModel)]="editingUser.name" name="name" required>
+        <input [(ngModel)]="editingUser.name" name="name" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px;">
       </label>
-      <label>
+      <label style="margin-bottom: 10px; width: 100%;">
         RUT:
-        <input [(ngModel)]="editingUser.rut" name="rut" required>
+        <input [(ngModel)]="editingUser.rut" name="rut" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px;">
       </label>
-      <label>
+      <label style="margin-bottom: 10px; width: 100%;">
         Rol:
-        <input [(ngModel)]="editingUser.role" name="role" required>
+        <input [(ngModel)]="editingUser.role" name="role" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px;">
       </label>
-      <button type="submit">Guardar</button>
-      <button type="button" (click)="cancelEdit()">Cancelar</button>
+      <button type="submit" style="margin-top: 10px; padding: 10px 20px; background-color: #28a745; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Guardar</button>
+      <button type="button" (click)="cancelEdit()" style="margin-top: 10px; padding: 10px 20px; background-color: #6c757d; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Cancelar</button>
     </form>
   </div>
 
-  <div>
-    <h3>Crear Nuevo Usuario</h3>
-    <form (ngSubmit)="createUser()">
-      <label>
+  <div style="margin-top: 20px;">
+    <h3 style="color: #333;">Crear Nuevo Usuario</h3>
+    <form (ngSubmit)="createUser()" style="display: flex; flex-direction: column; align-items: center;">
+      <label style="margin-bottom: 10px; width: 100%;">
         Nombre de Usuario:
-        <input [(ngModel)]="newUser.username" name="username" required>
+        <input [(ngModel)]="newUser.username" name="username" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px;">
       </label>
-      <label>
+      <label style="margin-bottom: 10px; width: 100%;">
         Nombre:
-        <input [(ngModel)]="newUser.name" name="name" required>
+        <input [(ngModel)]="newUser.name" name="name" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px;">
       </label>
-      <label>
+      <label style="margin-bottom: 10px; width: 100%;">
         RUT:
-        <input [(ngModel)]="newUser.rut" name="rut" required>
+        <input [(ngModel)]="newUser.rut" name="rut" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px;">
       </label>
-      <label>
+      <label style="margin-bottom: 10px; width: 100%;">
         Rol:
-        <input [(ngModel)]="newUser.role" name="role" required>
+        <input [(ngModel)]="newUser.role" name="role" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px;">
       </label>
-      <label>
+      <label style="margin-bottom: 10px; width: 100%;">
         Contraseña:
-        <input type="password" [(ngModel)]="newUser.password" name="password" required>
+        <input type="password" [(ngModel)]="newUser.password" name="password" required style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px;">
       </label>
-      <button type="submit">Crear</button>
+      <button type="submit" style="margin-top: 10px; padding: 10px 20px; background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Crear</button>
     </form>
   </div>
 </div>

@@ -2,15 +2,34 @@ main{
   margin-top: 2em;
 }
 
-.cards{
+.cards {
   display: flex;
-  flex-flow: row wrap;
-  gap: 2rem;
-  justify-content: center;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
-.card{
+
+.card {
+  border: 1px solid black;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 16px;
+  padding: 16px;
+  background-color: white;
+  max-width: 300px;
+}
+
+.card h5 {
+  color: black;
   text-align: center;
-  width: 250px;
-  height: 350px;
-  padding: 0.5em;
+}
+
+.card img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.card p {
+  color: black;
+  text-align: center;
 }

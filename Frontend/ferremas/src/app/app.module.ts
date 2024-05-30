@@ -12,16 +12,13 @@ import { FormsModule } from '@angular/forms';
 import { PaymentComponent } from './pages/payment/payment.component';
 import { PaymentSuccessComponent } from './pages/payment-success/payment-success.component';
 import { PaymentFailureComponent } from './pages/payment-failure/payment-failure.component';
-<<<<<<< HEAD
 import { CurrencyPipe } from '@angular/common';
-=======
 import { LoginComponent } from './pages/login/login.component';
 import { UsersComponent } from './pages/users/users.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { AuthComponent } from './pages/auth/auth.component';
 import { JwtModule } from '@auth0/angular-jwt';
->>>>>>> d75e544ff620f70f4e7250b73016b46a52748de0
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -59,12 +56,7 @@ export function tokenGetter() {
       }
     })
   ],
-<<<<<<< HEAD
   providers: [CurrencyPipe],
-=======
-  providers: [],
-
->>>>>>> d75e544ff620f70f4e7250b73016b46a52748de0
   bootstrap: [AppComponent]
 })
 export class AppModule { }

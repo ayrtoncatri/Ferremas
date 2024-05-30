@@ -11,6 +11,7 @@ import { PaymentComponent } from './pages/payment/payment.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { AuthComponent } from './pages/auth/auth.component';
+import { HomeComponent } from './pages/home/home.component';
 
 const routes: Routes = [
   {
@@ -18,7 +19,11 @@ const routes: Routes = [
     component: AuthComponent
   },
   {
-    path: 'products',
+    path: 'home',
+    component: HomeComponent
+  },
+  {
+    path: 'productos',
     component: ProductosComponent
   },
   {
