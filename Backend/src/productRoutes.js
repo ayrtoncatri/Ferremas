@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const productModel = require('../models/productModel');
-const authenticate = require('../middleware/authenticate');
+const productModel = require('./productModel');
+const authenticate = require('./middleware/authenticate');
 const multer = require('multer');
+
 
 // Configuración de Multer para la carga de imágenes
 const storage = multer.memoryStorage(); // Guarda los archivos en memoria
@@ -23,9 +24,9 @@ router.post('/', authenticate, upload.single('image'), (req, res) => {
   if (req.user.role !== 'admin') {
     return res.status(403).json({ message: 'Acceso denegado' });
   }
-  const { productCode, brand, code, name, price } = req.body;
+  const { productCode, brand, code, name, price, stock} = req.body;
   const imageBuffer = req.file ? req.file.buffer : null;
-  const product = { productCode, brand, code, name, price, image: imageBuffer };
+  const product = { productCode, brand, code, name, price: JSON.parse(price), image: imageBuffer, stock};
 
   productModel.createProductWithImage(product, imageBuffer, (err, productId) => {
     if (err) {
@@ -41,8 +42,9 @@ router.put('/:productCode', authenticate, (req, res) => {
     return res.status(403).json({ message: 'Acceso denegado' });
   }
   const { productCode } = req.params;
-  const { brand, code, name, price } = req.body;
-  const product = { brand, code, name, price };
+  const { brand, code, name, price, stock} = req.body;
+  const imageBuffer = req.file ? req.file.buffer : null;
+  const product = { brand, code, name, price: JSON.parse(price), image: imageBuffer, stock }
 
   productModel.updateProduct(productCode, product, (err, changes) => {
     if (err) {

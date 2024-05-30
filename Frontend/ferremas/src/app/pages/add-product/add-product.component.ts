@@ -1,6 +1,7 @@
 import { ProductService } from 'src/services/product.service';
 import { Component } from '@angular/core';
 import { Product } from 'src/app/models/product.models';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-product',
@@ -15,58 +16,94 @@ export class AddProductComponent {
     code: '',
     name: '',
     price: [],
-    image: ''
+    image: '',
+    stock: 0
   };
 
   price = {
     Fecha: '',
     Valor: 0
   };
+
   selectedFile: File | null = null;
+  isEditMode = false;
 
-  constructor(private productService: ProductService) {}
+  constructor(
+    private productService: ProductService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
+    this.initializeForm();
+  }
 
-  products: Product[] = [];
+  initializeForm(): void {
+    const productCode = this.route.snapshot.paramMap.get('productCode');
+    if (productCode) {
+      this.isEditMode = true;
+      this.productService.getProductByCode(productCode).subscribe((data: Product) => {
+        this.product = data;
+      });
+    }
+  }
 
-  onFileSelected(event: any) {
+  onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0];
   }
 
-  addPrice() {
+  addPrice(): void {
     this.product.price.push({ Fecha: this.price.Fecha, Valor: this.price.Valor });
+    this.price = { Fecha: '', Valor: 0 };
   }
 
-  onSubmit() {
+  onSubmit(): void {
     this.addPrice();
+    const formData = new FormData();
+
     console.log('Product before sending:', this.product);
 
-    if (!this.product) {
+    if (this.product) {
+      formData.append('productCode', this.product.productCode);
+      formData.append('brand', this.product.brand);
+      formData.append('code', this.product.code);
+      formData.append('name', this.product.name);
+      formData.append('price', JSON.stringify(this.product.price));
+      formData.append('stock', this.product.stock.toString()); // Agregamos 'stock' al FormData
+    } else {
       console.error('Producto no inicializado correctamente');
       return;
     }
 
-    if (!this.selectedFile) {
+    if (this.selectedFile) {
+      formData.append('image', this.selectedFile, this.selectedFile.name);
+    } else {
       console.warn('No se seleccionó ninguna imagen');
-      return;
     }
 
     console.log('FormData before sending:');
-    const formData = new FormData();
-    formData.append('productCode', this.product.productCode);
-    formData.append('brand', this.product.brand);
-    formData.append('code', this.product.code);
-    formData.append('name', this.product.name);
-    formData.append('price', JSON.stringify(this.product.price));
-    formData.append('image', this.selectedFile, this.selectedFile.name);
+    formData.forEach((value, key) => {
+      console.log(`${key}: ${value}`);
+    });
 
-    this.productService.createProduct(this.product, this.selectedFile).subscribe(
-      response => {
-        location.reload();
-        console.log('Producto agregado:', response);
-      },
-      error => {
-        console.error('Error al agregar producto:', error);
-      }
-    );
+    if (this.isEditMode) {
+      this.productService.updateProduct(this.product.productCode, formData).subscribe(
+        response => {
+          console.log('Producto actualizado:', response);
+          this.router.navigate(['/products']);
+        },
+        error => {
+          console.error('Error al actualizar producto:', error);
+        }
+      );
+    } else {
+      this.productService.createProduct(formData).subscribe(
+        response => {
+          console.log('Producto agregado:', response);
+          this.router.navigate(['/products']);
+        },
+        error => {
+          console.error('Error al agregar producto:', error);
+        }
+      );
+    }
   }
 }

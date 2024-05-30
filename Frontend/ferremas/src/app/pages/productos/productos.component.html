@@ -1,5 +1,27 @@
 <app-header></app-header>
-<main>
+<div>
+  <h2>Lista de Productos</h2>
+  <div class="card-container">
+    <div class="card" *ngFor="let product of products">
+      <div class="card-header">
+        <h3>Código: {{ product.productCode }}</h3>
+      </div>
+      <div class="card-body">
+        <p>Stock: {{ product.stock }}</p>
+        <p><strong>Marca:</strong> {{ product.brand }}<strong>Nombre:</strong> {{ product.name }}</p>
+        <p><strong>Precio:</strong></p>
+        <div *ngFor="let p of product.price">
+          <p>Fecha: {{ p.Fecha }}, Valor: {{ p.Valor }}</p>
+        </div>
+      </div>
+      <div class="card-footer">
+        <button (click)="deleteProduct(product.productCode)">Eliminar</button>
+        <button [routerLink]="['/add-product', product.productCode]">Editar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <main>
   <div *ngIf="products.length > 0; else noData" class="cards">
     <div *ngFor="let product of products" class="card">
       <h5>{{ product.name }} ({{ product.productCode }})</h5>
@@ -9,10 +31,7 @@
     </div>
   </div>
 
-
-
-  <app-payment></app-payment>
-</main>
+</main> -->
 
 <!-- <section class="py-5">
   <div class="container px-4 px-lg-5 mt-5">
@@ -46,9 +65,6 @@
 </section> -->
 
 
-
-
-<app-add-product></app-add-product>
 
 <footer class="py-5 bg-dark">
   <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>

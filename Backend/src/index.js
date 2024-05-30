@@ -5,16 +5,18 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const multer = require('multer');
 
-const productModel = require('./productModel');
 
 const paymentModel = require('./paymentModel');
-
+const productRoutes = require('./productRoutes');
 
 const authRoutes = require('./authRoutes');
+
 const cartRoutes = require('./cartRoutes');
 const authenticate = require('./middleware/authenticate');
+const userRoutes = require('./userRoutes');
 
 const app = express();
+
 const PORT = 3000;
 
 app.use(cors());
@@ -32,8 +34,8 @@ app.use('/auth', authRoutes);
 // Rutas del carrito (protegidas por autenticación)
 app.use('/cart', authenticate, cartRoutes);
 
-// Rutas de pagos (protegidas por autenticación)
-// app.use('/payments', authenticate, paymentModel);
+// Rutas de usuarios (protegidas por autenticación)
+app.use('/users', userRoutes);
 
 
 // app.get('/api/message', (req, res) => {
@@ -117,6 +119,8 @@ app.delete('/api/products/:productCode', (req, res) => {
     }
   });
 });
+// Rutas de productos
+app.use('/products', productRoutes);
 
 // Enpoints de pago
 app.get('/orders', (req, res) => {

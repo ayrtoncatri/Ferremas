@@ -18,12 +18,12 @@ export class LoginComponent {
   login(): void {
     this.authService.login(this.username, this.password).subscribe(
       (response: any) => {
-        localStorage.setItem('authToken', response.token);
+        localStorage.setItem('token', response.token);
         const userRole = this.authService.getRoleFromToken(response.token);
         if (userRole === 'admin') {
-          this.router.navigate(['/products']);
+          this.router.navigate(['/users']);
         } else {
-          this.router.navigate(['/register']);
+          this.router.navigate(['/auth']);
         }
       },
       (error) => {

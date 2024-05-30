@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/services/product.service';
-import { HttpClient } from '@angular/common/http';
 import { Product } from 'src/app/models/product.models';
 import { ApiService } from 'src/services/api.service';
+
+
 
 
 @Component({
@@ -25,15 +26,14 @@ export class ProductosComponent implements OnInit{
      });
   }
 
-  loadProducts() {
-    this.productService.getProducts().subscribe(
-      (data) => {
-        this.products = data;
-      },
-      (error) => {
-        console.error('Error al obtener productos', error);
-      }
-    );
+  loadProducts(): void {
+    this.productService.getProducts().subscribe((data: Product[]) => {
+      // Asegúrate de que cada producto tenga un array en la propiedad 'price'
+      this.products = data.map(product => ({
+        ...product,
+        price: Array.isArray(product.price) ? product.price : []
+      }));
+    });
   }
 
     products: Product[] = [];

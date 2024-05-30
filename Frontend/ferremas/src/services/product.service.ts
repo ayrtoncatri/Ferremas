@@ -27,13 +27,14 @@ export class ProductService {
       formData.append('image', image, image.name);
     }
 
+  createProduct(formData: FormData): Observable<any> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
     return this.http.post(this.apiUrl, formData, { headers });
   }
 
-  updateProduct(productCode: string, product: Product): Observable<any> {
+  updateProduct(productCode: string, formData: FormData): Observable<any> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
-    return this.http.put(`${this.apiUrl}/${productCode}`, product, { headers });
+    return this.http.put(`${this.apiUrl}/${productCode}`, formData, { headers });
   }
 
   deleteProductByCode(code: String): Observable<Product> {

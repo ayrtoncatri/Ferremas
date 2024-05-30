@@ -11,7 +11,10 @@ import { PaymentComponent } from './pages/payment/payment.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { AuthComponent } from './pages/auth/auth.component';
+import { AddProductComponent } from './pages/add-product/add-product.component';
 import { HomeComponent } from './pages/home/home.component';
+
+
 
 const routes: Routes = [
   {
@@ -24,9 +27,11 @@ const routes: Routes = [
   },
   {
     path: 'productos',
-    component: ProductosComponent
+    component: ProductosComponent,
+    canActivate: [authGuard, adminGuard]
   },
   {
+
     path: 'cart',
     component: CartComponent,
     canActivate: [authGuard]
@@ -49,11 +54,22 @@ const routes: Routes = [
     path: 'register',
     component: RegisterComponent
   },
+  {
+    path: 'add-product',
+    component: AddProductComponent,
+    canActivate: [authGuard, adminGuard]
+
+  },
   { path: '',
     redirectTo: '/login',
     pathMatch: 'full'
+  },
+  {
+    path: 'home',
+    component: HomeComponent
   }
 ];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
