@@ -1,7 +1,15 @@
 const bcrypt = require('bcrypt'); 
 const db = require('./database'); 
 const jwt = require('jsonwebtoken'); 
+const dotenv = require('dotenv');
+
+dotenv.config();
+
 const secretKey = process.env.SECRET_KEY
+
+if (!secretKey) {
+  throw new Error('JWT secret key is not defined');
+}
 
 
 // Función para registrar un nuevo usuario

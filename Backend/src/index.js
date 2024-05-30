@@ -7,15 +7,16 @@ const multer = require('multer');
 
 
 const productModel = require('./productModel');
-
 const paymentModel = require('./paymentModel');
 
 
 const authRoutes = require('./authRoutes');
 const cartRoutes = require('./cartRoutes');
 const authenticate = require('./middleware/authenticate');
+const userRoutes = require('./userRoutes');
 
 const app = express();
+
 const PORT = 3000;
 
 app.use(cors());
@@ -35,22 +36,8 @@ app.use('/auth', authRoutes);
 // Rutas del carrito (protegidas por autenticación)
 app.use('/cart', authenticate, cartRoutes);
 
-// Rutas de pagos (protegidas por autenticación)
-// app.use('/payments', authenticate, paymentModel);
-
-
-// app.get('/api/message', (req, res) => {
-//   res.send('Backend funcionando');
-// });
-
-// app.get('/payment-success', (req, res) => {
-//   res.send('Pago realizado');
-// });
-
-// app.get('/payment-failure', (req, res) => {
-//   res.send('Pago fallido');
-// });
-
+// Rutas de usuarios (protegidas por autenticación)
+app.use('/users', userRoutes);
 //Enpoints de productos
 
 app.get('/products', (req, res) => {

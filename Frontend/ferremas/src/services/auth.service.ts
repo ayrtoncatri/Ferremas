@@ -32,7 +32,7 @@ export class AuthService {
   getUser(): any {
     const token = this.getToken();
     if (token) {
-      return jwtDecode(token);
+      return this.jwtHelper.decodeToken(token);
     }
     return null;
   }
