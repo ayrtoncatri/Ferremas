@@ -37,16 +37,16 @@ router.post('/', authenticate, upload.single('image'), (req, res) => {
 });
 
 // Actualizar un producto (solo para administradores)
-router.put('/:productCode', authenticate, (req, res) => {
+router.put('/:id', authenticate, upload.single('image'), (req, res) => {
   if (req.user.role !== 'admin') {
     return res.status(403).json({ message: 'Acceso denegado' });
   }
-  const { productCode } = req.params;
-  const { brand, code, name, price } = req.body;
+  const { id } = req.params;
+  const { productCode, brand, code, name, price } = req.body;
   const imageBuffer = req.file ? req.file.buffer : null;
-  const product = { brand, code, name, price: JSON.parse(price), image: imageBuffer }
+  const product = { productCode, brand, code, name, price: JSON.parse(price), image: imageBuffer };
 
-  productModel.updateProduct(productCode, product, (err, changes) => {
+  productModel.updateProduct(id, product, (err, changes) => {
     if (err) {
       return res.status(500).json({ error: err.message });
     }
@@ -61,10 +61,12 @@ router.put('/:productCode', authenticate, (req, res) => {
 router.delete('/:productCode', authenticate, (req, res) => {
   if (req.user.role !== 'admin') {
     return res.status(403).json({ message: 'Acceso denegado' });
+
   }
   const { productCode } = req.params;
 
   productModel.deleteProduct(productCode, (err, changes) => {
+
     if (err) {
       return res.status(500).json({ error: err.message });
     }

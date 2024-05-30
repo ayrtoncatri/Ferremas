@@ -1,6 +1,108 @@
 <app-header></app-header>
 
+
 <div>
+  <h2>Lista de Productos</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Código</th>
+        <th>Marca</th>
+        <th>Nombre</th>
+        <th>Precio</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products">
+        <td>{{ product.productCode }}</td>
+        <td>{{ product.brand }}</td>
+        <td>{{ product.name }}</td>
+        <td>
+          <div *ngFor="let p of product.price">
+            <p>Fecha: {{ p.Fecha }}, Valor: {{ p.Valor }}</p>
+          </div>
+        </td>
+        <td>
+          <button (click)="editProduct(product)">Editar</button>
+          <button (click)="deleteProduct(product.productCode)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="editingProduct">
+  <h3>Editar Producto</h3>
+  <form (ngSubmit)="updateProduct()">
+    <label>
+      Código:
+      <input [(ngModel)]="editingProduct.productCode" name="productCode" required>
+    </label>
+    <label>
+      Marca:
+      <input [(ngModel)]="editingProduct.brand" name="brand" required>
+    </label>
+    <label>
+      Código Interno:
+      <input [(ngModel)]="editingProduct.code" name="code" required>
+    </label>
+    <label>
+      Nombre:
+      <input [(ngModel)]="editingProduct.name" name="name" required>
+    </label>
+    <label>
+      Fecha del precio:
+      <input type="date" [(ngModel)]="price.Fecha" name="priceFecha" required>
+    </label>
+    <label>
+      Valor del precio:
+      <input type="number" [(ngModel)]="price.Valor" name="priceValor" required>
+    </label>
+    <label>
+      Imagen:
+      <input type="file" (change)="onFileSelected($event)">
+    </label>
+    <button type="submit">Guardar</button>
+    <button type="button" (click)="cancelEdit()">Cancelar</button>
+  </form>
+</div>
+
+<div>
+  <h3>Crear Nuevo Producto</h3>
+  <form (ngSubmit)="createProduct()">
+    <label>
+      Código:
+      <input [(ngModel)]="newProduct.productCode" name="productCode" required>
+    </label>
+    <label>
+      Marca:
+      <input [(ngModel)]="newProduct.brand" name="brand" required>
+    </label>
+    <label>
+      Código Interno:
+      <input [(ngModel)]="newProduct.code" name="code" required>
+    </label>
+    <label>
+      Nombre:
+      <input [(ngModel)]="newProduct.name" name="name" required>
+    </label>
+    <label>
+      Fecha del precio:
+      <input type="date" [(ngModel)]="price.Fecha" name="priceFecha" required>
+    </label>
+    <label>
+      Valor del precio:
+      <input type="number" [(ngModel)]="price.Valor" name="priceValor" required>
+    </label>
+    <label>
+      Imagen:
+      <input type="file" (change)="onFileSelected($event)">
+    </label>
+    <button type="submit">Crear</button>
+  </form>
+</div>
+<!-- <div>
   <h2>Lista de Productos</h2>
   <table>
     <thead>
@@ -29,7 +131,7 @@
       </tr>
     </tbody>
   </table>
-</div>
+</div> -->
 <!-- <main>
   <div *ngIf="products.length > 0; else noData" class="cards">
     <div *ngFor="let product of products" class="card">

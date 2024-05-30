@@ -64,17 +64,21 @@ function getProductByCode(productCode, callback) {
 }
 
 
-function updateProduct(productCode, product, callback) {
-  const query = `UPDATE products SET brand = ?, code = ?, name = ?, price = ?, image = ? WHERE productCode = ?`;
+function updateProduct(id, product, callback) {
+  const query = `UPDATE products SET productCode = ?, brand = ?, code = ?, name = ?, price = ?, image = ? WHERE id = ?`;
   const params = [
+    product.productCode,
     product.brand,
+
+
     product.code,
     product.name,
     JSON.stringify(product.price),
     product.image,
-    productCode
+    id
   ];
   db.run(query, params, function (err) {
+
     callback(err, this.changes);
   });
 }
@@ -82,6 +86,7 @@ function updateProduct(productCode, product, callback) {
 function deleteProduct(productCode, callback) {
   const query = `DELETE FROM products WHERE productCode = ?`;
   db.run(query, [productCode], function (err) {
+
     callback(err, this.changes);
   });
 }

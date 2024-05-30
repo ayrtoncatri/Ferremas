@@ -4,6 +4,7 @@ export interface Price {
 }
 
 export interface Product {
+  id?: string;
   productCode: string;
   brand: string;
   code: string;

@@ -16,19 +16,21 @@ export class ProductService {
     return this.http.get<Product[]>(this.apiUrl);
   }
 
-  getProductByCode(productCode: string): Observable<Product> {
-    return this.http.get<Product>(`${this.apiUrl}/${productCode}`);
+  getProductByCode(productId: string): Observable<Product> {
+    return this.http.get<Product>(`${this.apiUrl}/${productId}`);
   }
+
 
   createProduct(formData: FormData): Observable<any> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
     return this.http.post(this.apiUrl, formData, { headers });
   }
 
-  updateProduct(productCode: string, formData: FormData): Observable<any> {
+  updateProduct(productId: string, formData: FormData): Observable<any> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
-    return this.http.put(`${this.apiUrl}/${productCode}`, formData, { headers });
+    return this.http.put(`${this.apiUrl}/${productId}`, formData, { headers });
   }
+
 
   // updateProduct(productCode: string, product: Product, image: File | null): Observable<any> {
   //   const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
@@ -36,10 +38,11 @@ export class ProductService {
 
   // }
 
-  deleteProduct(productCode: string): Observable<any> {
+  deleteProduct(productId: string): Observable<any> {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
-    return this.http.delete(`${this.apiUrl}/${productCode}`, { headers });
+    return this.http.delete(`${this.apiUrl}/${productId}`, { headers });
   }
+
 }
 
 
