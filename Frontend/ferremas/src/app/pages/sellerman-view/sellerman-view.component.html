@@ -1,0 +1,25 @@
+<app-header></app-header>
+
+<div class="card-container" *ngFor="let product of products">
+  <div class="card" *ngIf="product.stock > 1">
+    <p class="card-header">Nombre: {{ product.name }}</p>
+    <div *ngFor="let p of product.price">
+        <div class="card-image">
+            <img [src]="product.image" alt="Imagen de {{ product.name }}">
+        </div>
+      <p class="card-body">Precio: {{ p.Valor }}</p>
+    </div>
+    <p class="card-footer">Stock: {{ product.stock }}</p>
+  </div>
+</div>
+
+<footer class="py-5 bg-dark">
+  <div class="container">
+    <p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p>
+  </div>
+</footer>
+
+<ng-template #noData>
+  <p>No hay productos disponibles.</p>
+</ng-template>
+

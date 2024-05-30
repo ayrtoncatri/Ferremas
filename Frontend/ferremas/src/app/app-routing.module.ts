@@ -13,6 +13,8 @@ import { RegisterComponent } from './pages/register/register.component';
 import { AuthComponent } from './pages/auth/auth.component';
 import { AddProductComponent } from './pages/add-product/add-product.component';
 import { HomeComponent } from './pages/home/home.component';
+import { SellermanViewComponent } from './pages/sellerman-view/sellerman-view.component';
+import { WarehousemanViewComponent } from './pages/warehouseman-view/warehouseman-view.component';
 
 
 
@@ -63,6 +65,14 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent
+  },
+  {
+    path: 'sellerman',
+    component: SellermanViewComponent
+  },
+  {
+    path: 'warehouseman',
+    component: WarehousemanViewComponent
   }
 ];
 
