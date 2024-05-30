@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from 'src/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -11,12 +12,13 @@ export class RegisterComponent {
   user = { username: '', password: '', name: '', rut: '', role: '' };
   credentials = { username: '', password: '' };
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   register(user: any) {
     this.authService.register(user.username, user.password, user.name, user.rut, user.role).subscribe(response => {
       console.log('Usuario registrado', response);
       // Aquí puedes agregar lógica adicional, como redirigir al usuario o mostrar un mensaje de éxito
+      this.router.navigate(['/login']);
     });
   }
 
