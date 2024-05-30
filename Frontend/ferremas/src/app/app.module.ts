@@ -19,6 +19,8 @@ import { CartComponent } from './pages/cart/cart.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { AuthComponent } from './pages/auth/auth.component';
 import { JwtModule } from '@auth0/angular-jwt';
+import { SellermanViewComponent } from './pages/sellerman-view/sellerman-view.component';
+import { WarehousemanViewComponent } from './pages/warehouseman-view/warehouseman-view.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -39,7 +41,9 @@ export function tokenGetter() {
     UsersComponent,
     CartComponent,
     RegisterComponent,
-    AuthComponent
+    AuthComponent,
+    SellermanViewComponent,
+    WarehousemanViewComponent
   ],
   imports: [
     BrowserModule,
