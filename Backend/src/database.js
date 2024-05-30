@@ -45,7 +45,7 @@ db.serialize(() => {
           brand TEXT,
           code TEXT,
           name TEXT,
-          price REAL,
+          price TEXT,
           image TEXT
       )
     `);
@@ -138,7 +138,7 @@ module.exports = db;
 
 // Script solo para eliminar la tabla
 // db.serialize(() =>{
-//   db.run(`DROP TABLE IF EXISTS users`, function(err){
+//   db.run(`DROP TABLE IF EXISTS products`, function(err){
 //     if (err) {
 //       return console.error("Error al eliminar la tabla products:", err.message);
 //     }

@@ -65,12 +65,13 @@ function getProductByCode(productCode, callback) {
 
 
 function updateProduct(productCode, product, callback) {
-  const query = `UPDATE products SET brand = ?, code = ?, name = ?, price = ? WHERE productCode = ?`;
+  const query = `UPDATE products SET brand = ?, code = ?, name = ?, price = ?, image = ? WHERE productCode = ?`;
   const params = [
     product.brand,
     product.code,
     product.name,
     JSON.stringify(product.price),
+    product.image,
     productCode
   ];
   db.run(query, params, function (err) {
