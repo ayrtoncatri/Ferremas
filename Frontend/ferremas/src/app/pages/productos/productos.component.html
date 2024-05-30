@@ -1,34 +1,25 @@
 <app-header></app-header>
-
 <div>
   <h2>Lista de Productos</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Código</th>
-        <th>Marca</th>
-        <th>Nombre</th>
-        <th>Precio</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let product of products">
-        <td>{{ product.productCode }}</td>
-        <td>{{ product.brand }}</td>
-        <td>{{ product.name }}</td>
-        <td>
-          <div *ngFor="let p of product.price">
-            <p>Fecha: {{ p.Fecha }}, Valor: {{ p.Valor }}</p>
-          </div>
-        </td>
-        <td>
-          <button (click)="deleteProduct(product.productCode)">Eliminar</button>
-          <button [routerLink]="['/add-product', product.productCode]">Editar</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="card-container">
+    <div class="card" *ngFor="let product of products">
+      <div class="card-header">
+        <h3>Código: {{ product.productCode }}</h3>
+      </div>
+      <div class="card-body">
+        <p>Stock: {{ product.stock }}</p>
+        <p><strong>Marca:</strong> {{ product.brand }}<strong>Nombre:</strong> {{ product.name }}</p>
+        <p><strong>Precio:</strong></p>
+        <div *ngFor="let p of product.price">
+          <p>Fecha: {{ p.Fecha }}, Valor: {{ p.Valor }}</p>
+        </div>
+      </div>
+      <div class="card-footer">
+        <button (click)="deleteProduct(product.productCode)">Eliminar</button>
+        <button [routerLink]="['/add-product', product.productCode]">Editar</button>
+      </div>
+    </div>
+  </div>
 </div>
 <!-- <main>
   <div *ngIf="products.length > 0; else noData" class="cards">

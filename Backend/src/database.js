@@ -46,7 +46,8 @@ db.serialize(() => {
           code TEXT,
           name TEXT,
           price TEXT,
-          image TEXT
+          image TEXT,
+          stock INTEGER
       )
     `);
 

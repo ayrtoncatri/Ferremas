@@ -5,20 +5,19 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-product',
-
   templateUrl: './add-product.component.html',
   styleUrls: ['./add-product.component.css']
 })
-export class AddProductComponent{
+export class AddProductComponent {
 
   product: Product = {
-
     productCode: '',
     brand: '',
     code: '',
     name: '',
     price: [],
-    image: ''
+    image: '',
+    stock: 0
   };
 
   price = {
@@ -33,19 +32,17 @@ export class AddProductComponent{
     private productService: ProductService,
     private route: ActivatedRoute,
     private router: Router
-  )
-      {
-        this.initializeForm();
-      }
-
+  ) {
+    this.initializeForm();
+  }
 
   initializeForm(): void {
     const productCode = this.route.snapshot.paramMap.get('productCode');
     if (productCode) {
-          this.isEditMode = true;
-          this.productService.getProductByCode(productCode).subscribe((data: Product) => {
-            this.product = data;
-          });
+      this.isEditMode = true;
+      this.productService.getProductByCode(productCode).subscribe((data: Product) => {
+        this.product = data;
+      });
     }
   }
 
@@ -70,6 +67,7 @@ export class AddProductComponent{
       formData.append('code', this.product.code);
       formData.append('name', this.product.name);
       formData.append('price', JSON.stringify(this.product.price));
+      formData.append('stock', this.product.stock.toString()); // Agregamos 'stock' al FormData
     } else {
       console.error('Producto no inicializado correctamente');
       return;
@@ -108,50 +106,4 @@ export class AddProductComponent{
       );
     }
   }
-
-  // onFileSelected(event: any) {
-  //   this.selectedFile = event.target.files[0];
-  // }
-
-
-
-  // onSubmit() {
-  //   this.addPrice();
-  //   const formData = new FormData();
-
-  //   console.log('Product before sending:', this.product);
-
-  //   if (this.product) {
-  //       formData.append('productCode', this.product.productCode);
-  //       formData.append('brand', this.product.brand);
-  //       formData.append('code', this.product.code);
-  //       formData.append('name', this.product.name);
-  //       formData.append('price', JSON.stringify(this.product.price));
-  //   } else {
-  //       console.error('Producto no inicializado correctamente');
-  //       return;
-  //   }
-
-  //   if (this.selectedFile) {
-  //     formData.append('image', this.selectedFile, this.selectedFile.name);
-  //   } else {
-  //     console.warn('No se seleccionó ninguna imagen');
-  //   }
-
-  //   console.log('FormData before sending:');
-  //   formData.forEach((value, key) => {
-  //       console.log(`${key}: ${value}`);
-  //   });
-
-  //   this.productService.addProduct(formData).subscribe(
-  //     response => {
-  //       console.log('Producto agregado:', response);
-  //     },
-  //     error => {
-  //       console.error('Error al agregar producto:', error);
-  //     }
-  //   );
-
-  // }
-
 }

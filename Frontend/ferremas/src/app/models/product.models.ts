@@ -9,5 +9,6 @@ export interface Product {
   code: string;
   name: string;
   price: Price[];
-  image: string;
+  image: string; 
+  stock: number;
 }
