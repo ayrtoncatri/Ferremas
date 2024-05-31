@@ -21,7 +21,8 @@ export class ProductosComponent implements OnInit{
     code: '',
     name: '',
     price: [],
-    image: ''
+    image: '',
+    stock: 0
   };
   price = {
     Fecha: '',
@@ -68,6 +69,7 @@ export class ProductosComponent implements OnInit{
     formData.append('code', this.newProduct.code);
     formData.append('name', this.newProduct.name);
     formData.append('price', JSON.stringify(this.newProduct.price));
+    formData.append('stock', this.newProduct.stock.toString());
 
     if (this.selectedFile) {
       formData.append('image', this.selectedFile, this.selectedFile.name);
@@ -95,6 +97,7 @@ export class ProductosComponent implements OnInit{
       formData.append('code', this.editingProduct.code);
       formData.append('name', this.editingProduct.name);
       formData.append('price', JSON.stringify(this.editingProduct.price));
+      formData.append('stock', this.editingProduct.stock.toString());
 
       if (this.selectedFile) {
         formData.append('image', this.selectedFile, this.selectedFile.name);
@@ -142,7 +145,8 @@ export class ProductosComponent implements OnInit{
       code: '',
       name: '',
       price: [],
-      image: ''
+      image: '',
+      stock: 0
     };
     this.editingProduct = null;
     this.price = { Fecha: '', Valor: 0 };

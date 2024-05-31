@@ -24,9 +24,9 @@ router.post('/', authenticate, upload.single('image'), (req, res) => {
   if (req.user.role !== 'admin') {
     return res.status(403).json({ message: 'Acceso denegado' });
   }
-  const { productCode, brand, code, name, price } = req.body;
+  const { productCode, brand, code, name, price, stock } = req.body;
   const imageBuffer = req.file ? req.file.buffer : null;
-  const product = { productCode, brand, code, name, price: JSON.parse(price), image: imageBuffer };
+  const product = { productCode, brand, code, name, price: JSON.parse(price), image: imageBuffer, stock };
 
   productModel.createProductWithImage(product, imageBuffer, (err, productId) => {
     if (err) {
@@ -42,9 +42,9 @@ router.put('/:id', authenticate, upload.single('image'), (req, res) => {
     return res.status(403).json({ message: 'Acceso denegado' });
   }
   const { id } = req.params;
-  const { productCode, brand, code, name, price } = req.body;
+  const { productCode, brand, code, name, price, stock } = req.body;
   const imageBuffer = req.file ? req.file.buffer : null;
-  const product = { productCode, brand, code, name, price: JSON.parse(price), image: imageBuffer };
+  const product = { productCode, brand, code, name, price: JSON.parse(price), image: imageBuffer, stock };
 
   productModel.updateProduct(id, product, (err, changes) => {
     if (err) {

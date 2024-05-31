@@ -11,102 +11,102 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class AddProductComponent{
 
-  product: Product = {
+  // product: Product = {
 
-    productCode: '',
-    brand: '',
-    code: '',
-    name: '',
-    price: [],
-    image: ''
-  };
+  //   productCode: '',
+  //   brand: '',
+  //   code: '',
+  //   name: '',
+  //   price: [],
+  //   image: ''
+  // };
 
-  price = {
-    Fecha: '',
-    Valor: 0
-  };
+  // price = {
+  //   Fecha: '',
+  //   Valor: 0
+  // };
 
-  selectedFile: File | null = null;
-  isEditMode = false;
+  // selectedFile: File | null = null;
+  // isEditMode = false;
 
-  constructor(
-    private productService: ProductService,
-    private route: ActivatedRoute,
-    private router: Router
-  )
-      {
-        this.initializeForm();
-      }
+  // constructor(
+  //   private productService: ProductService,
+  //   private route: ActivatedRoute,
+  //   private router: Router
+  // )
+  //     {
+  //       this.initializeForm();
+  //     }
 
 
-  initializeForm(): void {
-    const productCode = this.route.snapshot.paramMap.get('productCode');
-    if (productCode) {
-          this.isEditMode = true;
-          this.productService.getProductByCode(productCode).subscribe((data: Product) => {
-            this.product = data;
-          });
-    }
-  }
+  // initializeForm(): void {
+  //   const productCode = this.route.snapshot.paramMap.get('productCode');
+  //   if (productCode) {
+  //         this.isEditMode = true;
+  //         this.productService.getProductByCode(productCode).subscribe((data: Product) => {
+  //           this.product = data;
+  //         });
+  //   }
+  // }
 
-  onFileSelected(event: any): void {
-    this.selectedFile = event.target.files[0];
-  }
+  // onFileSelected(event: any): void {
+  //   this.selectedFile = event.target.files[0];
+  // }
 
-  addPrice(): void {
-    this.product.price.push({ Fecha: this.price.Fecha, Valor: this.price.Valor });
-    this.price = { Fecha: '', Valor: 0 };
-  }
+  // addPrice(): void {
+  //   this.product.price.push({ Fecha: this.price.Fecha, Valor: this.price.Valor });
+  //   this.price = { Fecha: '', Valor: 0 };
+  // }
 
-  onSubmit(): void {
-    this.addPrice();
-    const formData = new FormData();
+  // onSubmit(): void {
+  //   this.addPrice();
+  //   const formData = new FormData();
 
-    console.log('Product before sending:', this.product);
+  //   console.log('Product before sending:', this.product);
 
-    if (this.product) {
-      formData.append('productCode', this.product.productCode);
-      formData.append('brand', this.product.brand);
-      formData.append('code', this.product.code);
-      formData.append('name', this.product.name);
-      formData.append('price', JSON.stringify(this.product.price));
-    } else {
-      console.error('Producto no inicializado correctamente');
-      return;
-    }
+  //   if (this.product) {
+  //     formData.append('productCode', this.product.productCode);
+  //     formData.append('brand', this.product.brand);
+  //     formData.append('code', this.product.code);
+  //     formData.append('name', this.product.name);
+  //     formData.append('price', JSON.stringify(this.product.price));
+  //   } else {
+  //     console.error('Producto no inicializado correctamente');
+  //     return;
+  //   }
 
-    if (this.selectedFile) {
-      formData.append('image', this.selectedFile, this.selectedFile.name);
-    } else {
-      console.warn('No se seleccionó ninguna imagen');
-    }
+  //   if (this.selectedFile) {
+  //     formData.append('image', this.selectedFile, this.selectedFile.name);
+  //   } else {
+  //     console.warn('No se seleccionó ninguna imagen');
+  //   }
 
-    console.log('FormData before sending:');
-    formData.forEach((value, key) => {
-      console.log(`${key}: ${value}`);
-    });
+  //   console.log('FormData before sending:');
+  //   formData.forEach((value, key) => {
+  //     console.log(`${key}: ${value}`);
+  //   });
 
-    if (this.isEditMode) {
-      this.productService.updateProduct(this.product.productCode, formData).subscribe(
-        response => {
-          console.log('Producto actualizado:', response);
-          this.router.navigate(['/products']);
-        },
-        error => {
-          console.error('Error al actualizar producto:', error);
-        }
-      );
-    } else {
-      this.productService.createProduct(formData).subscribe(
-        response => {
-          console.log('Producto agregado:', response);
-          this.router.navigate(['/products']);
-        },
-        error => {
-          console.error('Error al agregar producto:', error);
-        }
-      );
-    }
-  }
+  //   if (this.isEditMode) {
+  //     this.productService.updateProduct(this.product.productCode, formData).subscribe(
+  //       response => {
+  //         console.log('Producto actualizado:', response);
+  //         this.router.navigate(['/products']);
+  //       },
+  //       error => {
+  //         console.error('Error al actualizar producto:', error);
+  //       }
+  //     );
+  //   } else {
+  //     this.productService.createProduct(formData).subscribe(
+  //       response => {
+  //         console.log('Producto agregado:', response);
+  //         this.router.navigate(['/products']);
+  //       },
+  //       error => {
+  //         console.error('Error al agregar producto:', error);
+  //       }
+  //     );
+  //   }
+  // }
 
 }
